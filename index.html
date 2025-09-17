@@ -3,18 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>www.MercadoIA.cl</title>
+  <title>www.MercadoIA.cl — Animación integrada</title>
   <style>
+    /* ====== Base (from MercadoIA landing) ====== */
     :root{
-      --bg:#0f172a;        /* slate-900 */
-      --fg:#e2e8f0;        /* slate-200 */
-      --muted:#94a3b8;     /* slate-400 */
-      --brand:#22d3ee;     /* cyan-400 */
-      --accent:#6366f1;    /* indigo-500 */
-      --card:#111827;      /* gray-900 */
+      --bg:#0f172a;
+      --fg:#e2e8f0;
+      --muted:#94a3b8;
+      --brand:#22d3ee;
+      --accent:#6366f1;
+      --card:#111827;
       --glow:#22d3ee44;
+      --panel:#111834;
+      --glow2:#58a6ff;
+      --accent2:#86efac;
+      --packet:#22d3ee;
+      --atom:#f97316;
+      --text:#e5e7eb;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -25,34 +31,22 @@
       overflow-x:hidden;
     }
 
-    /* Layered horizontal bands */
-    .layers{
-      position:absolute; inset:0; z-index:-1;
-      pointer-events:none;
-    }
+    /* Decorative layered bands */
+    .layers{position:absolute; inset:0; z-index:0; pointer-events:none;}
     .layer{
       position:absolute; left:-10vw; right:-10vw;
       height:18vh; filter:blur(32px); opacity:.25;
       background:
         radial-gradient(120% 220% at 20% 50%, #22d3ee33 0%, transparent 60%),
         radial-gradient(120% 220% at 80% 50%, #6366f133 0%, transparent 60%);
-      border-radius:24px;
-      transform: skewY(-2deg);
+      border-radius:24px; transform: skewY(-2deg);
     }
-    .layer.l1{ top:8vh;  }
-    .layer.l2{ top:28vh; }
-    .layer.l3{ top:48vh; }
-    .layer.l4{ top:68vh; }
+    .layer.l1{ top:8vh;  } .layer.l2{ top:28vh; } .layer.l3{ top:48vh; } .layer.l4{ top:68vh; }
 
     header{
-      padding:24px 24px 0 24px;
-      display:flex; align-items:center; gap:16px; justify-content:center;
+      padding:24px 24px 0 24px; display:flex; align-items:center; gap:16px; justify-content:center; position:relative; z-index:3;
     }
-    .logo{
-      display:flex; align-items:center; gap:12px; user-select:none;
-      text-decoration:none; color:var(--fg);
-      filter: drop-shadow(0 6px 24px var(--glow));
-    }
+    .logo{ display:flex; align-items:center; gap:12px; user-select:none; text-decoration:none; color:var(--fg); filter: drop-shadow(0 6px 24px var(--glow)); }
     .logo svg{width:38px;height:38px}
     .logo .wordmark{
       font-weight:800; letter-spacing:.5px; font-size:20px;
@@ -61,107 +55,124 @@
     }
 
     .hero{
-      min-height:64vh;
-      display:grid; place-items:center;
-      text-align:center; padding:32px 20px 0;
+      min-height:64vh; display:grid; place-items:center; text-align:center; padding:32px 20px 0;
+      position:relative; z-index:3;
     }
     .title{
       font-size: clamp(32px,6vw,72px);
-      line-height:1.05; font-weight:900; margin:0 0 10px;
-      letter-spacing:.4px;
+      line-height:1.05; font-weight:900; margin:0 0 10px; letter-spacing:.4px;
       background: linear-gradient(90deg,#e2e8f0,#a5b4fc 70%,#67e8f9);
       -webkit-background-clip:text; background-clip:text; color:transparent;
       text-shadow: 0 10px 50px rgba(34,211,238,.15);
     }
-    .subtitle{
-      font-size: clamp(14px,2.2vw,18px);
-      color:var(--muted); margin:0 auto; max-width:80ch;
-    }
+    .subtitle{ font-size: clamp(14px,2.2vw,18px); color:var(--muted); margin:0 auto; max-width:80ch; }
 
     .cards{
-      margin:48px auto 72px;
-      display:grid; gap:22px; width:min(1100px,92%);
-      grid-template-columns: repeat(12, 1fr);
+      margin:48px auto 72px; display:grid; gap:22px; width:min(1100px,92%);
+      grid-template-columns: repeat(12, 1fr); position:relative; z-index:3;
     }
-    .card{
-      grid-column: span 12;
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      border:1px solid rgba(148,163,184,.18);
-      border-radius:24px; padding:18px;
+    .card{ grid-column: span 12; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(148,163,184,.18); border-radius:24px; padding:18px;
       box-shadow: 0 10px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.04);
     }
-    @media(min-width:880px){
-      .card{ grid-column: span 6; }
-    }
-    .card h3{
-      margin:8px 0 14px; font-size:18px; font-weight:700; color:#c7d2fe;
-      display:flex; align-items:center; gap:8px;
-    }
-    .card .canvas{
-      background: var(--card);
-      border-radius:18px; padding:18px; min-height:260px;
-      border:1px dashed rgba(148,163,184,.25);
-      display:flex; align-items:center; justify-content:center;
-    }
+    @media(min-width:880px){ .card{ grid-column: span 6; } }
+    .card h3{ margin:8px 0 14px; font-size:18px; font-weight:700; color:#c7d2fe; display:flex; align-items:center; gap:8px; }
+    .card .canvas{ background: var(--card); border-radius:18px; padding:18px; min-height:260px; border:1px dashed rgba(148,163,184,.25); display:flex; align-items:center; justify-content:center; }
 
-    /* Browser mock (left) */
-    .browser{
-      width:100%; max-width:560px;
-      background:#0b1220;
-      border-radius:14px; overflow:hidden;
-      border:1px solid rgba(148,163,184,.25);
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
-    }
-    .browser .bar{
-      display:flex; align-items:center; gap:8px;
-      padding:10px 14px; background:#0e1628; border-bottom:1px solid rgba(148,163,184,.15);
-      font-size:12px; color:#cbd5e1;
-    }
-    .dot{width:10px;height:10px;border-radius:50%}
-    .r{background:#ef4444}.y{background:#f59e0b}.g{background:#10b981}
+    .browser{ width:100%; max-width:560px; background:#0b1220; border-radius:14px; overflow:hidden; border:1px solid rgba(148,163,184,.25); box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+    .browser .bar{ display:flex; align-items:center; gap:8px; padding:10px 14px; background:#0e1628; border-bottom:1px solid rgba(148,163,184,.15); font-size:12px; color:#cbd5e1; }
+    .dot{width:10px;height:10px;border-radius:50%} .r{background:#ef4444}.y{background:#f59e0b}.g{background:#10b981}
     .addr{margin-left:8px; padding:6px 10px; border-radius:8px; background:#101a31; flex:1; border:1px solid rgba(148,163,184,.18)}
-    .page{
-      padding:22px; color:#e2e8f0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
-    }
-    .mp-header{
-      display:flex; align-items:center; gap:10px; margin-bottom:14px;
-      font-weight:800; letter-spacing:.3px;
-    }
+    .page{ padding:22px; color:#e2e8f0; }
+    .mp-header{ display:flex; align-items:center; gap:10px; margin-bottom:14px; font-weight:800; letter-spacing:.3px; }
     .badge{font-size:11px; padding:4px 8px; border-radius:999px; background:#0ea5e9; color:white}
-    .mp-grid{
-      display:grid; gap:12px; grid-template-columns: repeat(6,1fr);
-    }
-    .mp-card{
-      grid-column: span 3;
-      background:#0f1a32; border:1px solid rgba(148,163,184,.12);
-      border-radius:12px; padding:12px; min-height:80px;
-    }
+    .mp-grid{ display:grid; gap:12px; grid-template-columns: repeat(6,1fr); }
+    .mp-card{ grid-column: span 3; background:#0f1a32; border:1px solid rgba(148,163,184,.12); border-radius:12px; padding:12px; min-height:80px; }
     .mp-title{font-size:13px; color:#93c5fd; margin:4px 0}
     .mp-meta{font-size:12px; color:#94a3b8}
-
-    /* Robot (right) */
     .robot-wrap{ width:100%; max-width:560px; display:flex; justify-content:center; }
     .robot{ width:100%; height:auto; }
 
-    footer{
-      padding:28px 20px 60px; text-align:center; color:var(--muted);
-      font-size:14px;
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      background: rgba(99,102,241,.12);
-      border:1px solid rgba(99,102,241,.35);
-      padding:8px 14px; border-radius:999px;
-    }
+    footer{ padding:28px 20px 60px; text-align:center; color:var(--muted); font-size:14px; position:relative; z-index:3; }
+    .pill{ display:inline-flex; align-items:center; gap:10px; background: rgba(99,102,241,.12); border:1px solid rgba(99,102,241,.35);
+      padding:8px 14px; border-radius:999px; }
     .pill strong{ color:#c7d2fe }
-    .cta{
-      margin-top:18px; display:inline-block; text-decoration:none; color:#0b1220; background:linear-gradient(90deg,#67e8f9,#a78bfa);
-      padding:12px 16px; border-radius:12px; font-weight:700; border:0;
-      box-shadow: 0 10px 30px rgba(103,232,249,.3);
+    .cta{ margin-top:18px; display:inline-block; text-decoration:none; color:#0b1220; background:linear-gradient(90deg,#67e8f9,#a78bfa);
+      padding:12px 16px; border-radius:12px; font-weight:700; border:0; box-shadow: 0 10px 30px rgba(103,232,249,.3); }
+
+    /* ====== Animation layer (from animation file), adapted to sit behind hero ====== */
+    .anim-bg{
+      position:absolute; inset:0;
+      display:grid; place-items:center;
+      z-index:1;            /* behind hero/cards/footer which are z-index:3 */
+      pointer-events:none;  /* let clicks pass through */
+      overflow:hidden;
     }
+    .stage{
+      width:min(1200px, 92vw);
+      height:min(360px, 58vh);
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      outline:1px solid rgba(255,255,255,.08);
+      position:relative; overflow:hidden;
+      box-shadow: inset 0 0 80px rgba(88,166,255,.06);
+      opacity:.9;
+    }
+    .grid{
+      position:absolute; inset:0; opacity:.08;
+      background:
+        linear-gradient(transparent 23px, rgba(255,255,255,.8) 24px, transparent 25px),
+        linear-gradient(90deg, transparent 23px, rgba(255,255,255,.8) 24px, transparent 25px);
+      background-size: 50px 50px;
+      animation: drift 40s linear infinite;
+    }
+    @keyframes drift{to {background-position: 1000px 0, 0 600px}}
+
+    .node{
+      position:absolute; top:50%; width:160px; height:100px; border-radius:16px; transform:translateY(-50%);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      outline:1px solid rgba(255,255,255,.12);
+      display:grid; place-items:center; font-weight:700; letter-spacing:.3px; color:var(--fg);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .node.left{left:16px} .node.right{right:16px}
+    .connector{
+      position:absolute; left:200px; right:200px; top:50%; height:4px; transform:translateY(-50%);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+      filter: drop-shadow(0 0 10px rgba(88,166,255,.35));
+    }
+
+    .packet{
+      position:absolute; top:50%; left:-160px; transform: translateY(-50%);
+      display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px;
+      background: rgba(34,211,238,.1); outline: 1px solid rgba(34,211,238,.35); backdrop-filter: blur(3px);
+      box-shadow: 0 0 0 0 rgba(34,211,238,.4), 0 0 30px rgba(34,211,238,.15) inset;
+      color:#ccfbf1; font-weight:600; letter-spacing:.5px; white-space:nowrap;
+      animation: moveX var(--dur, 7s) linear infinite;
+    }
+    .packet .dot{width:8px; height:8px; border-radius:50%; background:var(--packet); box-shadow: 0 0 10px var(--packet);}
+    @keyframes moveX{ 0% { left:-220px; opacity:0; } 5% { opacity:1; } 100% { left: calc(100% + 220px); opacity:.9; } }
+    .packet span.code{opacity:.9; font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;}
+    .packet .arrow{filter: drop-shadow(0 0 8px rgba(34,211,238,.9)); font-size:18px}
+
+    .atom{ position:absolute; width:110px; height:110px; border-radius:50%; left: clamp(210px, 20vw, 260px); top: 22%; transform-origin: center; animation: float 6s ease-in-out infinite; }
+    .atom.right{ left:auto; right: clamp(210px, 20vw, 260px); top: 68%; animation-delay: 1.2s; }
+    @keyframes float{ 0%,100%{ transform: translateY(-6px) rotate(0deg);} 50%{ transform: translateY(6px) rotate(2deg);} }
+    .orbit{ position:absolute; inset:0; border:1px dashed rgba(249,115,22,.3); border-radius:50%; filter: drop-shadow(0 0 6px rgba(249,115,22,.3)); }
+    .electron{ position:absolute; width:10px; height:10px; border-radius:50%; background: var(--atom); box-shadow: 0 0 12px rgba(249,115,22,.9); top:50%; left:50%;
+      transform: translate(-50%, -50%) rotate(0) translateX(48px); animation: orbit 2.8s linear infinite; }
+    .electron.e2{ animation-duration: 3.6s; transform: translate(-50%, -50%) rotate(120deg) translateX(44px); }
+    .electron.e3{ animation-duration: 4.2s; transform: translate(-50%, -50%) rotate(240deg) translateX(40px); }
+    @keyframes orbit{ to { transform: translate(-50%, -50%) rotate(360deg) translateX(48px); } }
+    .nucleus{ position:absolute; width:18px; height:18px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #fde68a, #f97316 55%, #9a3412); top:50%; left:50%; transform: translate(-50%, -50%); box-shadow: 0 0 16px rgba(249,115,22,.9); }
+
+    .pulse{ position:absolute; top:50%; left:200px; transform: translateY(-50%); width:12px; height:12px; border-radius:50%; background: #58a6ff; box-shadow: 0 0 14px #58a6ff; opacity:.7; animation: pulseX 3.6s ease-in-out infinite;}
+    .pulse.p2{ animation-delay: .8s } .pulse.p3{ animation-delay: 1.6s }
+    @keyframes pulseX{ 0%{ left:200px; opacity:.2; transform:translateY(-50%) scale(.6) } 30%{ opacity:1; } 100%{ left: calc(100% - 200px); opacity:.1; transform:translateY(-50%) scale(1) } }
   </style>
 </head>
 <body>
+  <!-- Decorative bands -->
   <div class="layers">
     <div class="layer l1"></div>
     <div class="layer l2"></div>
@@ -169,16 +180,37 @@
     <div class="layer l4"></div>
   </div>
 
+  <!-- Animation background centered behind hero -->
+  <div class="anim-bg" aria-hidden="true">
+    <div class="stage" role="img" aria-label="Animación de datos y átomos">
+      <div class="grid"></div>
+      <div class="node left">Compras Públicas</div>
+      <div class="node right">IA</div>
+      <div class="connector"></div>
+
+      <div class="atom">
+        <div class="orbit"></div><div class="electron"></div><div class="electron e2"></div><div class="electron e3"></div><div class="nucleus"></div>
+      </div>
+      <div class="atom right">
+        <div class="orbit"></div><div class="electron"></div><div class="electron e2"></div><div class="electron e3"></div><div class="nucleus"></div>
+      </div>
+
+      <div class="pulse"></div><div class="pulse p2"></div><div class="pulse p3"></div>
+
+      <div class="packet" style="--dur: 7.2s; top: 38%"><div class="dot"></div><span class="code">Licitación 4150-12-LE25</span><span class="arrow">⟶</span></div>
+      <div class="packet" style="--dur: 6.0s; top: 50%"><div class="dot"></div><span class="code">Cotización CM</span><span class="arrow">⟶</span></div>
+      <div class="packet" style="--dur: 8.4s; top: 62%"><div class="dot"></div><span class="code">Licitación 214-2222-LR24</span><span class="arrow">⟶</span></div>
+      <div class="packet" style="--dur: 5.2s; top: 44%"><div class="dot"></div><span class="code">Convenio Marco</span><span class="arrow">⟶</span></div>
+      <div class="packet" style="--dur: 9.2s; top: 70%"><div class="dot"></div><span class="code">Órden de Compra</span><span class="arrow">⟶</span></div>
+      <div class="packet" style="--dur: 7.8s; top: 30%"><div class="dot"></div><span class="code">datos</span><span class="arrow">⟶</span></div>
+
+    </div>
+  </div>
+
   <header>
     <a class="logo" href="#" aria-label="MercadoIA">
-      <!-- Simple spark logo -->
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-            <stop stop-color="#22d3ee"/>
-            <stop offset="1" stop-color="#7c3aed"/>
-          </linearGradient>
-        </defs>
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
         <rect x="8" y="8" width="32" height="32" rx="8" fill="url(#g1)"/>
         <path d="M18 24h12M24 18v12" stroke="white" stroke-width="3" stroke-linecap="round"/>
       </svg>
@@ -189,22 +221,16 @@
   <main class="hero">
     <div>
       <h1 class="title">www.MercadoIA.cl</h1>
-      <p class="subtitle">
-        Información inteligente sobre <strong>compras públicas</strong> con IA: licitaciones, convenios marco y analítica en un solo lugar.
-      </p>
+      <p class="subtitle">Información inteligente sobre <strong>compras públicas</strong> con IA: licitaciones, convenios marco y analítica en un solo lugar.</p>
     </div>
   </main>
 
   <section class="cards">
-    <!-- Left: MercadoPublico mock -->
     <article class="card">
       <h3>Vista tipo <span class="badge">MercadoPublico.cl</span></h3>
       <div class="canvas">
-        <div class="browser" role="img" aria-label="Simulación de sitio MercadoPublico.cl">
-          <div class="bar">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <span class="addr">https://www.mercadopublico.cl</span>
-          </div>
+        <div class="browser" role="img" aria-label="Simulación MercadoPublico.cl">
+          <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="addr">https://www.mercadopublico.cl</span></div>
           <div class="page">
             <div class="mp-header">
               <svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -216,75 +242,39 @@
                 <div class="mp-meta">Panel de licitaciones (mock)</div>
               </div>
             </div>
-
             <div class="mp-grid">
-              <div class="mp-card">
-                <div class="mp-title">Licitación 1605-46-LE25</div>
-                <div class="mp-meta">Estado: Publicada · Cierre: 25/09</div>
-              </div>
-              <div class="mp-card">
-                <div class="mp-title">Convenio Marco · Insumos TI</div>
-                <div class="mp-meta">Órgano: MDS · Ítems: 124</div>
-              </div>
-              <div class="mp-card">
-                <div class="mp-title">OC 5802363-4702ZNUD</div>
-                <div class="mp-meta">Monto ref.: 1.200 UTM</div>
-              </div>
-              <div class="mp-card">
-                <div class="mp-title">Base de Datos de Proveedores</div>
-                <div class="mp-meta">Nuevos: 37 · Actualizados: 12</div>
-              </div>
+              <div class="mp-card"><div class="mp-title">Licitación 1605-46-LE25</div><div class="mp-meta">Estado: Publicada · Cierre: 25/09</div></div>
+              <div class="mp-card"><div class="mp-title">Convenio Marco · Insumos TI</div><div class="mp-meta">Órgano: MDS · Ítems: 124</div></div>
+              <div class="mp-card"><div class="mp-title">OC 5802363-4702ZNUD</div><div class="mp-meta">Monto ref.: 1.200 UTM</div></div>
+              <div class="mp-card"><div class="mp-title">Base de Datos de Proveedores</div><div class="mp-meta">Nuevos: 37 · Actualizados: 12</div></div>
             </div>
           </div>
         </div>
       </div>
     </article>
 
-    <!-- Right: Robot IA -->
     <article class="card">
       <h3>Asistente <span class="badge">IA</span></h3>
       <div class="canvas">
         <div class="robot-wrap" role="img" aria-label="Ilustración de robot IA">
-          <!-- Clean SVG robot -->
           <svg class="robot" viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="rb1" x1="0" y1="0" x2="1" y2="1">
-                <stop stop-color="#22d3ee"/>
-                <stop offset="1" stop-color="#7c3aed"/>
-              </linearGradient>
-              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="b"/>
-                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
+              <linearGradient id="rb1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
-
-            <!-- Antenna -->
             <circle cx="280" cy="70" r="10" fill="url(#rb1)" filter="url(#glow)"/>
             <rect x="277" y="80" width="6" height="18" rx="3" fill="#a5b4fc"/>
-
-            <!-- Head -->
             <rect x="210" y="100" width="140" height="90" rx="24" fill="#0f1a32" stroke="#64748b" stroke-width="2"/>
-            <!-- Eyes -->
             <rect x="235" y="130" width="28" height="18" rx="9" fill="#22d3ee"/>
             <rect x="297" y="130" width="28" height="18" rx="9" fill="#22d3ee"/>
-            <!-- Smile -->
             <path d="M245 160 C265 175, 295 175, 315 160" stroke="#a5b4fc" stroke-width="3" fill="none" stroke-linecap="round"/>
-
-            <!-- Body -->
             <rect x="190" y="200" width="180" height="130" rx="26" fill="#0f1a32" stroke="#64748b" stroke-width="2"/>
             <rect x="205" y="215" width="150" height="60" rx="12" fill="#0b1220" stroke="#334155"/>
-            <!-- Heartbeat / data -->
             <path d="M215 245 L245 245 L255 230 L270 260 L285 240 L315 245 L350 245" stroke="url(#rb1)" stroke-width="3" fill="none" stroke-linecap="round"/>
-
-            <!-- Arms -->
             <rect x="160" y="220" width="24" height="90" rx="12" fill="#0f1a32" stroke="#64748b"/>
             <rect x="366" y="220" width="24" height="90" rx="12" fill="#0f1a32" stroke="#64748b"/>
-
-            <!-- Legs -->
             <rect x="215" y="330" width="36" height="30" rx="8" fill="#0f1a32" stroke="#64748b"/>
             <rect x="309" y="330" width="36" height="30" rx="8" fill="#0f1a32" stroke="#64748b"/>
-
-            <!-- Shadow -->
             <ellipse cx="280" cy="370" rx="110" ry="12" fill="#0b1220"/>
           </svg>
         </div>
@@ -293,13 +283,24 @@
   </section>
 
   <footer>
-    <div class="pill">
-      <span>⚡</span>
-      <span>Próximamente: <strong>análisis automático</strong> de bases, <strong>alertas</strong> y <strong>dashboards</strong>.</span>
-    </div>
-    <div>
-      <a class="cta" href="#" onclick="alert('¡Gracias por tu interés!');return false;">Quiero saber más</a>
-    </div>
+    <div class="pill"><span>⚡</span><span>Próximamente: <strong>análisis automático</strong> de bases, <strong>alertas</strong> y <strong>dashboards</strong>.</span></div>
+    <div><a class="cta" href="#" onclick="alert('¡Gracias por tu interés!');return false;">Quiero saber más</a></div>
   </footer>
+
+  <script>
+    // Allow pausing the background animation with "P"
+    (function(){
+      let paused = false;
+      document.addEventListener('keydown', (e)=>{
+        if(e.key.toLowerCase()==='p'){
+          paused = !paused;
+          document.querySelectorAll('.packet, .pulse, .electron, .grid').forEach(el=>{
+            el.style.animationPlayState = paused ? 'paused' : 'running';
+          });
+        }
+      });
+      console.log('Presiona "P" para pausar/reanudar la animación.');
+    })();
+  </script>
 </body>
 </html>
